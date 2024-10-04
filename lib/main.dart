@@ -25,15 +25,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<UserBloc>()..add(CheckUser()),
         ),
-       
       ],
       child: OKToast(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRouter.home,
+          initialRoute: AppRouter.signIn,
           onGenerateRoute: AppRouter.onGenerateRoute,
           title: 'Guliva',
-
           builder: EasyLoading.init(),
         ),
       ),

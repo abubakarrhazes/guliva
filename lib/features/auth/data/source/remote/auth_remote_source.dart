@@ -1,19 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:dartz/dartz.dart';
 import 'package:guliva/core/constants/app_strings.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:guliva/core/error/failures.dart';
 import 'package:guliva/features/auth/data/models/response_model.dart';
-import 'package:guliva/features/auth/domain/entities/user.dart';
+import 'package:guliva/features/auth/data/models/user_model.dart';
 import 'package:guliva/features/auth/domain/usecase/sign_in_usecase.dart';
 import 'package:guliva/features/auth/domain/usecase/sign_up_usecase.dart';
+import 'package:http/http.dart' as http;
 
 abstract class AuthRemoteSource {
-  Future<ResponseModel> signIn(SignInParams params);
-  Future<ResponseModel> signUp(SignUpParams params);
+  Future<UserModel> signIn(SignInParams params);
+  Future<UserModel> signUp(SignUpParams params);
 }
 
 class AuthRemoteSourceImpl implements AuthRemoteSource {
@@ -24,7 +21,7 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
   });
 
   @override
-  Future<ResponseModel> signIn(SignInParams params) async {
+  Future<UserModel> signIn(SignInParams params) async {
     final response = await client.post(
       Uri.parse('${AppStrings.baseUrl}/user/login'),
       headers: {
@@ -38,16 +35,19 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
       ),
     );
     if (response.statusCode == 200) {
-      return responseModelFromJson(response.body);
+      final jsonResponse = jsonDecode(response.body);
+      return UserModel.fromJson(jsonResponse['data']);
     } else if (response.statusCode == 400 || response.statusCode == 401) {
+      print('Credential Failure ${response.statusCode}');
       throw CredentialFailure();
     } else {
+      print('Here');
       throw ServerFailure();
     }
   }
 
   @override
-  Future<ResponseModel> signUp(SignUpParams params) async {
+  Future<UserModel> signUp(SignUpParams params) async {
     final response = await client.post(
       Uri.parse('${AppStrings.baseUrl}/user/register'),
       headers: {
@@ -67,7 +67,8 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
     );
 
     if (response.statusCode == 200) {
-      return responseModelFromJson(response.body);
+      final jsonResponse = jsonDecode(response.body);
+      return UserModel.fromJson(jsonResponse['data']);
     } else if (response.statusCode == 400 || response.statusCode == 401) {
       throw CredentialFailure();
     } else {

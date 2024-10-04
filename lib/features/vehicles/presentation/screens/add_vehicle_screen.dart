@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guliva/core/constants/app_image_constant.dart';
 
 import '../../../../core/constants/app_icons.dart';
 
@@ -18,7 +19,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         title: Image.asset(
-          AppIcons.appLogo,
+          AppImageConstant.appLogo,
           scale: 1.5,
         ),
         centerTitle: true,

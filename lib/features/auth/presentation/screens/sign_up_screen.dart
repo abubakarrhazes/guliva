@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:guliva/core/constants/app_fonts.dart';
+import 'package:guliva/core/constants/app_image_constant.dart';
 import 'package:guliva/core/shared_components/custom_button.dart';
 import 'package:guliva/core/shared_components/custom_text_field.dart';
 
@@ -31,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         surfaceTintColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Image.asset(
-          AppIcons.appLogo,
+          AppImageConstant.appLogo,
           scale: 1.5,
         ),
         centerTitle: true,
@@ -46,6 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
+                    fontFamily: AppFonts.poppins,
                     color: Colors.grey),
               ),
               const SizedBox(
@@ -90,7 +93,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 title: "Date of Birth",
                 isObscure: false,
-                suffixIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.calendar_month_rounded, color: Colors.grey,)),
+                suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.calendar_month_rounded,
+                      color: Colors.grey,
+                    )),
                 controller: dobController,
               ),
               const SizedBox(
@@ -106,7 +114,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       });
                     },
                     icon: Icon(
-                      isObscure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                      isObscure
+                          ? Icons.remove_red_eye
+                          : Icons.remove_red_eye_outlined,
                       color: Colors.grey,
                     )),
                 controller: passwordController,
@@ -143,17 +153,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           TextSpan(
                               text: "i agree to the ",
                               style: TextStyle(
+                                  fontFamily: AppFonts.poppins,
                                   color: Color(AppColors.primaryColor))),
                           TextSpan(
                               text: "Terms & Condition",
-                              style: TextStyle(color: Colors.red)),
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontFamily: AppFonts.poppins,
+                              )),
                           TextSpan(
                               text: " and ",
                               style: TextStyle(
-                                  color: Color(AppColors.primaryColor))),
+                                  fontFamily: AppFonts.poppins,
+                                  color: Color(
+                                    AppColors.primaryColor,
+                                  ))),
                           TextSpan(
                               text: " Privacy Policy",
-                              style: TextStyle(color: Colors.red)),
+                              style: TextStyle(
+                                  fontFamily: AppFonts.poppins,
+                                  color: Colors.red)),
                         ]),
                   ),
                 ],

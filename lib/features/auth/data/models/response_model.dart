@@ -2,11 +2,7 @@
 import 'dart:convert';
 
 import 'package:guliva/features/auth/data/models/user_model.dart';
-
-ResponseModel responseModelFromJson(String str) =>
-    ResponseModel.fromJson(json.decode(str));
-
-String responseModelToJson(ResponseModel data) => json.encode(data.toJson());
+import 'user_model.dart';
 
 class ResponseModel {
   final bool success;
@@ -19,15 +15,19 @@ class ResponseModel {
     required this.data,
   });
 
-  factory ResponseModel.fromJson(Map<String, dynamic> json) => ResponseModel(
-        success: json["success"],
-        message: json["message"],
-        data: UserModel.fromJson(json["data"]),
-      );
+  factory ResponseModel.fromJson(Map<String, dynamic> json) {
+    return ResponseModel(
+      success: json['success'],
+      message: json['message'],
+      data: UserModel.fromJson(json['data']),
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "success": success,
-        "message": message,
-        "data": data.toJson(),
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'success': success,
+      'message': message,
+      'data': data.toJson(),
+    };
+  }
 }

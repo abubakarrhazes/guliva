@@ -5,14 +5,15 @@ import 'package:guliva/core/error/failures.dart';
 import 'package:guliva/core/network/network_info.dart';
 import 'package:guliva/core/usecases/usecase.dart';
 import 'package:guliva/features/auth/data/models/response_model.dart';
+import 'package:guliva/features/auth/data/models/user_model.dart';
 import 'package:guliva/features/auth/data/source/local/auth_local_source.dart';
 import 'package:guliva/features/auth/data/source/remote/auth_remote_source.dart';
-import 'package:guliva/features/auth/domain/entities/user.dart';
+import 'package:guliva/features/auth/domain/entities/user_entity.dart';
 import 'package:guliva/features/auth/domain/repo/auth_repo.dart';
 import 'package:guliva/features/auth/domain/usecase/sign_in_usecase.dart';
 import 'package:guliva/features/auth/domain/usecase/sign_up_usecase.dart';
 
-typedef _DataSourceChooser = Future<ResponseModel> Function();
+typedef _DataSourceChooser = Future<UserModel> Function();
 
 class AuthRepoImpl implements AuthRepo {
   final AuthRemoteSource authRemoteSource;
@@ -24,7 +25,7 @@ class AuthRepoImpl implements AuthRepo {
       required this.authLocalSource,
       required this.networkInfo});
   @override
-  Future<Either<Failure, User>> getCachedUser() async {
+  Future<Either<Failure, UserEntity>> getCachedUser() async {
     // TODO: implement getCachedUser
     try {
       final user = await authLocalSource.getUser();
@@ -35,7 +36,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, User>> signIn(SignInParams params) async {
+  Future<Either<Failure, UserEntity>> signIn(SignInParams params) async {
     return await _authenticate(() {
       return authRemoteSource.signIn(params);
     });
@@ -53,22 +54,22 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, User>> signUp(SignUpParams params) async {
+  Future<Either<Failure, UserEntity>> signUp(SignUpParams params) async {
     // TODO: implement signUp
     return await _authenticate(() {
       return authRemoteSource.signUp(params);
     });
   }
 
-  Future<Either<Failure, User>> _authenticate(
+  Future<Either<Failure, UserEntity>> _authenticate(
     _DataSourceChooser getDataSource,
   ) async {
     if (await networkInfo.isConnected) {
       try {
         final remoteResponse = await getDataSource();
-        authLocalSource.saveToken(remoteResponse.data.token);
-        authLocalSource.saveUser(remoteResponse.data);
-        return Right(remoteResponse.data);
+        authLocalSource.saveToken(remoteResponse.token);
+        authLocalSource.saveUser(remoteResponse);
+        return Right(remoteResponse);
       } on Failure catch (failure) {
         return Left(failure);
       }

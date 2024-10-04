@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+import 'package:equatable/equatable.dart';
+
+class UserEntity extends Equatable {
   final int id;
   final String email;
   final String firstName;
@@ -10,13 +12,12 @@ class User extends Equatable {
   final DateTime dob;
   final double walletBalance;
   final double pendingPayment;
+  final String? transactionPin;
   final String? location;
   final String? image;
-  final bool hasActiveTrip;
   final String phoneNo;
   final String token;
   final String? accountPin;
-  final String? facebookUserId;
   final String? nokFirstName;
   final String? nokLastName;
   final String? nokPhoneNumber;
@@ -27,8 +28,12 @@ class User extends Equatable {
   final bool withEmail;
   final bool withGoogle;
   final bool withFacebook;
+  final int? planId;
+  final String password;
+  final String? facebookUserId;
+  final bool hasActiveTrip;
 
-  const User({
+  UserEntity({
     required this.id,
     required this.email,
     required this.firstName,
@@ -38,13 +43,12 @@ class User extends Equatable {
     required this.dob,
     required this.walletBalance,
     required this.pendingPayment,
+    this.transactionPin,
     this.location,
     this.image,
-    required this.hasActiveTrip,
     required this.phoneNo,
     required this.token,
     this.accountPin,
-    this.facebookUserId,
     this.nokFirstName,
     this.nokLastName,
     this.nokPhoneNumber,
@@ -55,10 +59,13 @@ class User extends Equatable {
     required this.withEmail,
     required this.withGoogle,
     required this.withFacebook,
+    this.planId,
+    required this.password,
+    this.facebookUserId,
+    required this.hasActiveTrip,
   });
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         id,
         email,
@@ -69,13 +76,12 @@ class User extends Equatable {
         dob,
         walletBalance,
         pendingPayment,
+        transactionPin,
         location,
         image,
-        hasActiveTrip,
         phoneNo,
         token,
         accountPin,
-        facebookUserId,
         nokFirstName,
         nokLastName,
         nokPhoneNumber,
@@ -86,5 +92,9 @@ class User extends Equatable {
         withEmail,
         withGoogle,
         withFacebook,
+        planId,
+        password,
+        facebookUserId,
+        hasActiveTrip
       ];
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:guliva/core/constants/app_colors.dart';
 
 class LoginOptionCard extends StatelessWidget {
@@ -23,7 +24,7 @@ class LoginOptionCard extends StatelessWidget {
           SizedBox(
             height: 25,
               width: 25,
-              child: Image.asset(icon, color: const Color(AppColors.primaryColor),)),
+              child: SvgPicture.asset(icon, color: const Color(AppColors.primaryColor),)),
           const SizedBox(width: 10,),
           Text(
             title,
