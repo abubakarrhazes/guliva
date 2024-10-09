@@ -1,3 +1,4 @@
+
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
@@ -40,7 +41,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         (user) => emit(UserLogged(user)),
       );
     } catch (e) {
-      emit(UserLoggedFail(ExceptionFailure()));
+      emit(UserLoggedFail(ExceptionFailure(message: 'Exception Failure')));
     }
   }
 
@@ -53,7 +54,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         (user) => emit(UserLogged(user)),
       );
     } catch (e) {
-      emit(UserLoggedFail(ExceptionFailure()));
+      emit(UserLoggedFail(ExceptionFailure(message: '')));
     }
   }
 
@@ -66,7 +67,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         (user) => emit(UserLogged(user)),
       );
     } catch (e) {
-      emit(UserLoggedFail(ExceptionFailure()));
+      emit(UserLoggedFail(ExceptionFailure(message: 'Exception Failure')));
     }
   }
 
@@ -76,7 +77,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await _signOutUseCase(NoParams());
       emit(UserLoggedOut());
     } catch (e) {
-      emit(UserLoggedFail(ExceptionFailure()));
+      emit(UserLoggedFail(ExceptionFailure(message: 'Exception Failure')));
     }
   }
 }

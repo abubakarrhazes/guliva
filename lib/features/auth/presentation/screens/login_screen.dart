@@ -174,9 +174,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               } else if (state is UserLoggedFail) {
                                 if (state.failure is CredentialFailure) {
                                   errorWidget(
-                                      message: 'Username/Password Wrong');
+                                      message: state.failure.message);
                                 } else {
-                                  errorWidget(message: 'Error');
+                                  errorWidget(message: state.failure.message);
                                 }
                               }
                             },

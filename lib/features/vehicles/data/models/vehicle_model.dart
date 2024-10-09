@@ -1,0 +1,190 @@
+import 'dart:convert';
+
+import 'package:guliva/features/auth/data/models/user_model.dart';
+import 'package:guliva/features/auth/domain/entities/user_entity.dart';
+import 'package:guliva/features/vehicles/domain/entities/trip_entity.dart';
+import 'package:guliva/features/vehicles/domain/entities/vehicle_entity.dart';
+
+VehicleModel userModelFromJson(String str) =>
+    VehicleModel.fromJson(json.decode(str));
+
+String vehicleModelToJson(VehicleModel data) => json.encode(data.toJson());
+
+List<VehicleModel> vehicleModelListFromJson(String jsonString) {
+  final List<dynamic> jsonList = jsonDecode(jsonString);
+  
+  // Map each JSON object to a VehicleModel
+  return jsonList.map((json) => VehicleModel.fromJson(json)).toList();
+}
+
+
+class VehicleModel extends VehicleEntity {
+  VehicleModel({
+    required int id,
+    required String createdAt,
+    required String typeOfVehicle,
+    int? drivingYears,
+    required bool isDefault,
+    required bool isPassenger,
+    String? ownership,
+    String? aidRequired,
+    String? otherAid,
+    String? parking,
+    String? involvedInAccident,
+    String? securityForVehicle,
+    String? bookedForTrafficOffense,
+    String? usage,
+    required String name,
+    required String model,
+    required bool isThirdPartyInsurance,
+    required String color,
+    required String year,
+    required int value,
+    required String registrationNumber,
+    required String engineNumber,
+    required String chassisNumber,
+    required int distanceCovered,
+    required int amountBilled,
+    required int minimumPayablePremiumAmount,
+    String? engineCapacity,
+    required String frontView,
+    required String sideView,
+    required String backView,
+    required String driversLicense,
+    required String topView,
+    String? insuranceCertificate,
+    String? modeOfInsurance,
+    required String thirdPartyInsurance,
+    String? proofOfOwnership,
+    required UserEntity userEntity,
+    required List<Trip> trips,
+  }) : super(
+          id: id,
+          createdAt: createdAt,
+          typeOfVehicle: typeOfVehicle,
+          drivingYears: drivingYears,
+          isDefault: isDefault,
+          isPassenger: isPassenger,
+          ownership: ownership,
+          aidRequired: aidRequired,
+          otherAid: otherAid,
+          parking: parking,
+          involvedInAccident: involvedInAccident,
+          securityForVehicle: securityForVehicle,
+          bookedForTrafficOffense: bookedForTrafficOffense,
+          usage: usage,
+          name: name,
+          model: model,
+          isThirdPartyInsurance: isThirdPartyInsurance,
+          color: color,
+          year: year,
+          value: value,
+          registrationNumber: registrationNumber,
+          engineNumber: engineNumber,
+          chassisNumber: chassisNumber,
+          distanceCovered: distanceCovered,
+          amountBilled: amountBilled,
+          minimumPayablePremiumAmount: minimumPayablePremiumAmount,
+          engineCapacity: engineCapacity,
+          frontView: frontView,
+          sideView: sideView,
+          backView: backView,
+          driversLicense: driversLicense,
+          topView: topView,
+          insuranceCertificate: insuranceCertificate,
+          modeOfInsurance: modeOfInsurance,
+          thirdPartyInsurance: thirdPartyInsurance,
+          proofOfOwnership: proofOfOwnership,
+          userEntity: userEntity,
+          trips: trips,
+        );
+
+  // Convert a Vehicle instance to a JSON map
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'createdAt': createdAt,
+      'typeOfVehicle': typeOfVehicle,
+      'drivingYears': drivingYears,
+      'default': isDefault,
+      'isPassenger': isPassenger,
+      'ownership': ownership,
+      'aidRequired': aidRequired,
+      'otherAid': otherAid,
+      'parking': parking,
+      'involvedInAccident': involvedInAccident,
+      'securityForVehicle': securityForVehicle,
+      'bookedForTrafficOffense': bookedForTrafficOffense,
+      'usage': usage,
+      'name': name,
+      'model': model,
+      'isThirdPartyInsurance': isThirdPartyInsurance,
+      'color': color,
+      'year': year,
+      'value': value,
+      'registrationNumber': registrationNumber,
+      'engineNumber': engineNumber,
+      'chassisNumber': chassisNumber,
+      'distanceCovered': distanceCovered,
+      'amountBilled': amountBilled,
+      'minimumPayablePremiumAmount': minimumPayablePremiumAmount,
+      'engineCapacity': engineCapacity,
+      'frontView': frontView,
+      'sideView': sideView,
+      'backView': backView,
+      'driversLicense': driversLicense,
+      'topView': topView,
+      'insuranceCertificate': insuranceCertificate,
+      'modeOfInsurance': modeOfInsurance,
+      'thirdPartyInsurance': thirdPartyInsurance,
+      'proofOfOwnership': proofOfOwnership,
+      'user': userEntity,
+      'trips': trips!.map((trip) => trip.toJson()).toList(),
+    };
+  }
+
+  factory VehicleModel.fromJson(Map<String, dynamic> json) {
+    return VehicleModel(
+      id: json['id'],
+      createdAt: json['createdAt'],
+      typeOfVehicle: json['typeOfVehicle'],
+      drivingYears: json['drivingYears'],
+      isDefault: json['default'],
+      isPassenger: json['isPassenger'],
+      ownership: json['ownership'],
+      aidRequired: json['aidRequired'],
+      otherAid: json['otherAid'],
+      parking: json['parking'],
+      involvedInAccident: json['involvedInAccident'],
+      securityForVehicle: json['securityForVehicle'],
+      bookedForTrafficOffense: json['bookedForTrafficOffense'],
+      usage: json['usage'],
+      name: json['name'],
+      model: json['model'],
+      isThirdPartyInsurance: json['isThirdPartyInsurance'],
+      color: json['color'],
+      year: json['year'],
+      value: json['value'],
+      registrationNumber: json['registrationNumber'],
+      engineNumber: json['engineNumber'],
+      chassisNumber: json['chassisNumber'],
+      distanceCovered: json['distanceCovered'],
+      amountBilled: json['amountBilled'],
+      minimumPayablePremiumAmount: json['minimumPayablePremiumAmount'],
+      engineCapacity: json['engineCapacity'],
+      frontView: json['frontView'],
+      sideView: json['sideView'],
+      backView: json['backView'],
+      driversLicense: json['driversLicense'],
+      topView: json['topView'],
+      insuranceCertificate: json['insuranceCertificate'],
+      modeOfInsurance: json['modeOfInsurance'],
+      thirdPartyInsurance: json['thirdPartyInsurance'],
+      proofOfOwnership: json['proofOfOwnership'],
+      userEntity: UserModel.fromJson(
+        json['data'],
+      ),
+      trips: json['trips'] ?? [],
+    );
+  }
+}

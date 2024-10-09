@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:guliva/core/router/app_router.dart';
 import 'package:guliva/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:guliva/features/auth/presentation/screens/login_screen.dart';
+import 'package:guliva/features/vehicles/presentation/logic/fetch_vehicle/cubit/fetch_vehicle_cubit.dart';
 import 'package:oktoast/oktoast.dart';
 import 'core/services/service_locator.dart' as di;
 
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => di.sl<UserBloc>()..add(CheckUser()),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<FetchVehicleCubit>()..getVehicles(),
         ),
       ],
       child: OKToast(

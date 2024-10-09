@@ -31,7 +31,7 @@ class AuthRepoImpl implements AuthRepo {
       final user = await authLocalSource.getUser();
       return Right(user);
     } on CacheFailure {
-      return Left(CacheFailure());
+      return Left(CacheFailure(message: 'Cache Failure '));
     }
   }
 
@@ -49,7 +49,7 @@ class AuthRepoImpl implements AuthRepo {
       await authLocalSource.clearCache();
       return Right(NoParams());
     } on CacheFailure {
-      return Left(CacheFailure());
+      return Left(CacheFailure(message: 'Cache Failure'));
     }
   }
 
@@ -67,14 +67,19 @@ class AuthRepoImpl implements AuthRepo {
     if (await networkInfo.isConnected) {
       try {
         final remoteResponse = await getDataSource();
-        authLocalSource.saveToken(remoteResponse.token);
-        authLocalSource.saveUser(remoteResponse);
+        await authLocalSource.saveToken(remoteResponse.token);
+        final String token = await authLocalSource.getToken();
+        print(token);
+        await authLocalSource.saveUserId(remoteResponse.id);
+        final int? id = await authLocalSource.getUserId();
+        print(id);
+        await authLocalSource.saveUser(remoteResponse);
         return Right(remoteResponse);
       } on Failure catch (failure) {
         return Left(failure);
       }
     } else {
-      return Left(NetworkFailure());
+      return Left(NetworkFailure(message: 'No Internet Connectivity'));
     }
   }
 }

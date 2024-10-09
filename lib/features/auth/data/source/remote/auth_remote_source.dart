@@ -38,11 +38,9 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
       final jsonResponse = jsonDecode(response.body);
       return UserModel.fromJson(jsonResponse['data']);
     } else if (response.statusCode == 400 || response.statusCode == 401) {
-      print('Credential Failure ${response.statusCode}');
-      throw CredentialFailure();
+      throw CredentialFailure(message: 'Credential Failure');
     } else {
-      print('Here');
-      throw ServerFailure();
+      throw ServerFailure(message: 'Server Failure');
     }
   }
 
@@ -61,7 +59,6 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
           'email': params.email,
           'dob': params.dob,
           'password': params.password,
-          'withEmail': params.withEmail,
         },
       ),
     );
@@ -70,9 +67,10 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
       final jsonResponse = jsonDecode(response.body);
       return UserModel.fromJson(jsonResponse['data']);
     } else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw CredentialFailure();
+      final jsonResponse = jsonDecode(response.body)['message'];
+      throw CredentialFailure(message: jsonResponse);
     } else {
-      throw ServerFailure();
+      throw ServerFailure(message: 'Server Failure');
     }
   }
 }
